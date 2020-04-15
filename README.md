@@ -65,12 +65,12 @@ sudo apt install pgadmin4 pgadmin4-apache2 -y
 pgAdmin is now available on ```http://localhost/pgAdmin4```
 
 # Get Britanny osm
-```./query-overpass.sh ['timeout:7200];(area[name="Bretagne"][admin_level="4"];)->.a;(node(area.a);<;);out meta;'```
+```./query-overpass.sh '[timeout:96000];(area[name="Bretagne"][admin_level="4"];)->.a;(node(area.a);<;);out meta;'```
 or
 ```wget 'http://overpass-api.de/api/interpreter?data=[timeout:3600];(area[name="Bretagne"][admin_level="4"];)->.a;(node(area.a);<;);out meta;' -O bretagne.osm```
 
 # Get Finistère osm
-```./query-overpass.sh ['timeout:7200];(area[name="Finistère"][admin_level="6"];)->.a;(node(area.a);<;);out meta;'```
+```./query-overpass.sh '[timeout:96000];(area[name="Finistère"][admin_level="6"];)->.a;(node(area.a);<;);out meta;'```
 or
 ```wget 'http://overpass-api.de/api/interpreter?data=[timeout:7200];(area[name="Finistère"][admin_level="6"];)->.a;(node(area.a);<;);out meta;' -O finistere.osm```
 

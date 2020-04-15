@@ -74,6 +74,10 @@ or
 or
 ```wget 'http://overpass-api.de/api/interpreter?data=[timeout:7200];(area[name="Finistère"][admin_level="6"];)->.a;(node(area.a);<;);out meta;' -O finistere.osm```
 
+# install osm2pgsql
+
+```sudo apt install osm2pgsql```
+
 # Add osm into database
 
 ```osm2pgsql bretagne.osm -d myuser -U mydatabase --hstore --number-processes 20```

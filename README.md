@@ -30,9 +30,9 @@ sudo apt install postgis*
 
 # Change Postgres password
 
-```sudo su - postgress```
+```sudo su - postgres```
 
-```pgsql -c "alter user postgress with password 'chenco'"```
+```pgsql -c "alter user postgres with password 'chenco'"```
 
 ```exit```
 

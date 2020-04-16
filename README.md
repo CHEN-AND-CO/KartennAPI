@@ -80,5 +80,10 @@ or
 ```sudo apt install osm2pgsql```
 
 # Add osm into database
-
-```osm2pgsql bretagne.osm -d mydatabase -U myuser --hstore --number-processes 20```
+### First file
+``` osm2pgsql finistere.osm -d ohmybzh -U admin --hstore --slim
+```
+### Others
+```
+osm2pgsql morbihan.osm -d ohmybzh -U admin --hstore --slim --append
+```

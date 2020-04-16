@@ -53,6 +53,7 @@ CREATE EXTENSION fuzzystrmatch;
 CREATE EXTENSION address_standardizer;
 CREATE EXTENSION address_standardizer_data_us;
 CREATE EXTENSION postgis_tiger_geocoder;
+CREATE EXTENSION hstore;
 ```
 
 # Install pgAdmin4
@@ -80,4 +81,4 @@ or
 
 # Add osm into database
 
-```osm2pgsql bretagne.osm -d myuser -U mydatabase --hstore --number-processes 20```
+```osm2pgsql bretagne.osm -d mydatabase -U myuser --hstore --number-processes 20```

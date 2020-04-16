@@ -34,11 +34,11 @@ sudo apt install postgis*
 
 ```psql -c "alter user postgres with password 'chenco'"```
 
-```exit```
-
 # Create database
 
 ```createdb mydatabase -O bevin```
+
+```exit```
 
 # Install postgis on database
 

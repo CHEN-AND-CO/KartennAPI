@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 module.exports = {
   create: function (req, res, next) {
     userModel.findOne({ email: req.body.email }, function (err, userInfo) {
-      if (err) {
+      if (!userInfo) {
         userModel.create(
           {
             name: req.body.name,

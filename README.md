@@ -32,7 +32,7 @@ sudo apt install postgis*
 
 ```sudo su - postgres```
 
-```pgsql -c "alter user postgres with password 'chenco'"```
+```psql -c "alter user postgres with password 'chenco'"```
 
 ```exit```
 
@@ -42,7 +42,7 @@ sudo apt install postgis*
 
 # Install postgis on database
 
-```pgsql```
+```psql```
 
 ```
 CREATE EXTENSION postgis; 

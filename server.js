@@ -3,7 +3,7 @@ const logger = require("morgan");
 const bodyParser = require("body-parser");
 var jwt = require("jsonwebtoken");
 
-const mongoose = require("./config/database").default; //database config
+const mongoose = require("./config/database"); //database config
 const movies = require("./routes/movies");
 const users = require("./routes/users");
 

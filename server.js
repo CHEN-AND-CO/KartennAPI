@@ -5,6 +5,8 @@ var jwt = require("jsonwebtoken");
 
 const mongoose = require("./config/database"); //database config
 const movies = require("./routes/movies");
+
+const cities = require("./routes/cities");
 const users = require("./routes/users");
 
 const app = express();
@@ -34,6 +36,7 @@ app.get("/", function (req, res) {
 
 // public route
 app.use("/users", users);
+app.use("/cities", cities);
 
 // private route
 app.use("/movies", validateUser, movies);

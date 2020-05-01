@@ -1,4 +1,5 @@
 const cityModel = require("../models/cities");
+const KartennGenerator = require('../../../config/generator')
 
 module.exports = {
   getById: function (req, res, next) {
@@ -19,6 +20,7 @@ module.exports = {
     console.log(req.body);
     cityModel.findByName(req.params.cityName, function (err, cityInfo) {
       if (err) {
+        KartennGenerator.createMap("", req.params.cityName, req.params.cityName+".png");
         next(err);
       } else {
         res.json({

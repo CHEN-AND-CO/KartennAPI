@@ -1,8 +1,9 @@
 var consts = {
     host: "localhost",
     db: "kartenn_api",
-    user: "user",
-    pass: "password"
+    authSource: "admin",
+    user: "Kartenn",
+    pass: "KartennPassword"
 };
 
 module.exports = consts;

@@ -38,6 +38,9 @@ app.use("/users", users);
 app.use("/cities", cities);
 
 // private routes
+app.get("/logged",validateUser, function(req, res){
+  res.sendStatus(200);
+});
 
 app.get("/favicon.ico", function (req, res) {
   res.sendStatus(204);

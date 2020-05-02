@@ -20,7 +20,7 @@ module.exports = {
     console.log(req.body);
     cityModel.findByName(req.params.cityName, function (err, cityInfo) {
       if (err) {
-        KartennGenerator.createMap("", req.params.cityName, req.params.cityName+".png");
+        KartennGenerator.createMap("model.xml", req.params.cityName, req.params.cityName+".png");
         next(err);
       } else {
         res.json({

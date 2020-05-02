@@ -17,17 +17,42 @@ module.exports = {
     });
   },
   getByName: function (req, res, next) {
-    console.log(req.body);
-    cityModel.findByName(req.params.cityName, function (err, cityInfo) {
+    console.log(req.params);
+    cityModel.findOne({ "name": req.params.cityName }, function (err, cityInfo) {
       if (err) {
-        KartennGenerator.createMap("model.xml", req.params.cityName, req.params.cityName+".png");
         next(err);
       } else {
-        res.json({
-          status: "success",
-          message: "City found!!!",
-          data: { cities: cityInfo },
-        });
+        if (!cityInfo) {
+          let resultPath = KartennGenerator.createMap("model.xml", req.params.cityName, req.params.cityName + ".png");
+          
+          if (!resultPath) {
+            res.json({
+              status: "error",
+              message: "Failed to create the city ..."
+            });
+          } else {
+            cityModel.create(
+              { name: req.params.cityName, file: resultPath },
+              function (err, result) {
+                if (err) {
+                  next(err);
+                } else {
+                  res.json({
+                    status: "success",
+                    message: "city added successfully!!!",
+                    data: { name: req.params.cityName, file: resultPath }
+                  });
+                }
+              }
+            );
+          }
+        } else {
+          res.json({
+            status: "success",
+            message: "City found!!!",
+            data: { cities: cityInfo },
+          });
+        }
       }
     });
   },

@@ -9,7 +9,7 @@ const CitySchema = new Schema({
     required: true,
   },
   file: {
-    type: Buffer,
+    type: String,
     trim: true,
     required: true,
   }

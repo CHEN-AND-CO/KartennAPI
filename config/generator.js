@@ -1,7 +1,6 @@
 //Set up Kartenn generator
 
 const generator = require("../generator");
+const constants = require("./consts")
 
-const path = "KartennGenerator";
-
-module.exports = new generator(path);
+module.exports = new generator(constants.generatorPath, constants.outputDir, constants.mapsUrl);

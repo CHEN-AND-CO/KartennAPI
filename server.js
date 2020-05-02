@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 var jwt = require("jsonwebtoken");
 
 const mongoose = require("./config/database"); //database config
-const movies = require("./routes/movies");
 
 const cities = require("./routes/cities");
 const users = require("./routes/users");
@@ -34,12 +33,11 @@ app.get("/", function (req, res) {
   res.json({ tutorial: "Build REST API with node.js" });
 });
 
-// public route
+// public routes
 app.use("/users", users);
 app.use("/cities", cities);
 
-// private route
-app.use("/movies", validateUser, movies);
+// private routes
 
 app.get("/favicon.ico", function (req, res) {
   res.sendStatus(204);

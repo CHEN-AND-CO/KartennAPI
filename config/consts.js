@@ -7,6 +7,7 @@ var consts = {
     // Certificates path
     SSLCertificateFile: "fullchain.pem",    
     SSLCertificateKeyFile: "privkey.pem",
+    https: true,
     // Maps & Stuff
     outputDir: "/var/www/website/maps/",    // Maps output path     
     generatorPath: "KartennGenerator",      // Generator path

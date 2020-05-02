@@ -110,6 +110,7 @@ data
 KartennGenerator
 model.xml
 
+config
 config/consts.js
 db_settings
 config.json

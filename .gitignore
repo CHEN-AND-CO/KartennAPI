@@ -109,3 +109,5 @@ package-lock.json
 data
 KartennGenerator
 model.xml
+
+config/consts.js

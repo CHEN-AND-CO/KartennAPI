@@ -45,7 +45,7 @@ module.exports = {
           res.json({
             status: "success",
             message: "user found!!!",
-            data: { user: userInfo, token: token },
+            data: { user: { id: userInfo.id, name: userInfo.name, email: userInfo.email }, token: token },
           });
         } else {
           res.json({

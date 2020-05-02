@@ -1,5 +1,6 @@
 const express = require("express");
 const logger = require("morgan");
+const cors = require("cors");
 const bodyParser = require("body-parser");
 var jwt = require("jsonwebtoken");
 
@@ -22,6 +23,7 @@ app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+//app.use(cors());
 // CORS error fix
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
@@ -38,8 +40,9 @@ app.use("/users", users);
 app.use("/cities", cities);
 
 // private routes
-app.get("/logged",validateUser, function(req, res){
-  res.sendStatus(200);
+app.options('/logged', cors());
+app.get("/logged", validateUser, function(req, res){
+  res.json({ status: "success", message: null, data: null });
 });
 
 app.get("/favicon.ico", function (req, res) {

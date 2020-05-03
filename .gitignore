@@ -112,3 +112,5 @@ model.xml
 
 db_settings
 config.json
+
+*.pem

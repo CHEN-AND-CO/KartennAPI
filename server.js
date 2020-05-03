@@ -2,8 +2,14 @@ const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+
+const fs = require("fs");
+const https = require("https");
+const  helmet = require("helmet");
 var jwt = require("jsonwebtoken");
 
+
+const constants = require("./config/consts");
 const mongoose = require("./config/database"); //database config
 
 const cities = require("./routes/cities");
@@ -22,6 +28,8 @@ mongoose.connection.on(
 app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(helmet());
+app.use(cors());
 
 //app.use(cors());
 // CORS error fix
@@ -41,7 +49,7 @@ app.use("/cities", cities);
 
 // private routes
 app.options('/logged', cors());
-app.get("/logged", validateUser, function(req, res){
+app.get("/logged", validateUser, function (req, res) {
   res.json({ status: "success", message: null, data: null });
 });
 
@@ -78,6 +86,17 @@ app.use(function (err, req, res, next) {
   else res.status(500).json({ message: "Something looks wrong :( !!!" });
 });
 
-app.listen(PORT, '0.0.0.0', function () {
-  console.log("Node server listening on port" + PORT);
-});
+if (!constants.https) {
+  app.listen(PORT, '0.0.0.0', function () {
+    console.log("Node server listening on port " + PORT);
+  });
+} else {
+  const options = {
+    key: fs.readFileSync(constants.SSLCertificateKeyFile),
+    cert: fs.readFileSync(constants.SSLCertificateFile)
+  };
+
+  https.createServer(options, app).listen(PORT, '0.0.0.0', function () {
+    console.log("Node server listening on port" + PORT);
+  });
+}

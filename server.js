@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 
 const fs = require("fs");
 const https = require("https");
-const  helmet = require("helmet");
+const helmet = require("helmet");
 var jwt = require("jsonwebtoken");
 
 
@@ -58,7 +58,9 @@ app.get("/favicon.ico", function (req, res) {
 });
 
 function validateUser(req, res, next) {
-  jwt.verify(req.headers["x-access-token"], req.app.get("secretKey"), function (
+  var token = req.headers.authorization.split(' ')[1];
+
+  jwt.verify(token, req.app.get("secretKey"), function (
     err,
     decoded
   ) {

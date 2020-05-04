@@ -81,7 +81,8 @@ or
 
 # Add osm into database
 ### First file
-``` osm2pgsql finistere.osm -d ohmybzh -U admin --hstore --slim
+``` 
+osm2pgsql finistere.osm -d ohmybzh -U admin --hstore --slim
 ```
 ### Others
 ```

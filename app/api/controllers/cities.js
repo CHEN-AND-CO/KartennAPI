@@ -23,16 +23,17 @@ module.exports = {
         next(err);
       } else {
         if (!cityInfo) {
-          let resultPath = await KartennGenerator.createMap("model.xml", req.params.cityName, req.params.cityName + ".png");
+          let generatedCityPath = await KartennGenerator.createMap("model.xml", req.params.cityName, req.params.cityName + ".png");
+          let generatedCityPathSimp = await KartennGenerator.createMap("model.xml", req.params.cityName, req.params.cityName + "_simp.png");
 
-          if (!resultPath) {
+          if (!generatedCityPath || !generatedCityPathSimp) {
             res.json({
               status: "error",
               message: "Failed to create the city ..."
             });
           } else {
             cityModel.create(
-              { name: req.params.cityName, file: resultPath },
+              { name: req.params.cityName, file: generatedCityPath, file_simp: generatedCityPathSimp },
               function (err, result) {
                 if (err) {
                   next(err);
@@ -40,7 +41,7 @@ module.exports = {
                   res.json({
                     status: "success",
                     message: "city added successfully!!!",
-                    data: { name: req.params.cityName, file: resultPath }
+                    data: { name: req.params.cityName, file: generatedCityPath, file_simp: generatedCityPathSimp }
                   });
                 }
               }
@@ -50,7 +51,7 @@ module.exports = {
           res.json({
             status: "success",
             message: "City found!!!",
-            data: { name: cityInfo.name, file: cityInfo.file },
+            data: { name: cityInfo.name, file: cityInfo.file, file_simp: cityInfo.file_simp },
           });
         }
       }
@@ -67,6 +68,7 @@ module.exports = {
             id: city._id,
             name: city.name,
             file: city.file,
+            file_simp: city.file_simp
           });
         }
         res.json({
@@ -80,7 +82,7 @@ module.exports = {
   updateById: function (req, res, next) {
     cityModel.findByIdAndUpdate(
       req.params.cityId,
-      { name: req.body.name, file: req.body.file },
+      { name: req.body.name, file: req.body.file, file_simp: req.body.file_simp },
       function (err, cityInfo) {
         if (err) next(err);
         else {
@@ -107,7 +109,7 @@ module.exports = {
   },
   create: function (req, res, next) {
     cityModel.create(
-      { name: req.body.name, file: req.body.file },
+      { name: req.body.name, file: req.body.file, file_simp: req.body.file_simp },
       function (err, result) {
         if (err) next(err);
         else

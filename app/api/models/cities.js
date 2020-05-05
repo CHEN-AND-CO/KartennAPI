@@ -12,6 +12,11 @@ const CitySchema = new Schema({
     type: String,
     trim: true,
     required: true,
+  },
+  file_simp: {
+    type: String,
+    trim: true,
+    required: true,
   }
 });
 

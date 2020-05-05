@@ -33,7 +33,7 @@ class Generator {
     }
 
     async createMap(model, name, output) {
-        const stdout = await execShellCommand(`./${this._path} ${name} ${model} ${this._outputDir}${output}`);
+        const stdout = await execShellCommand(`${this._path} ${name} ${model} ${this._outputDir}${output}`);
         console.log(`${stdout}`);
 
         return this._mapsUrl + output;

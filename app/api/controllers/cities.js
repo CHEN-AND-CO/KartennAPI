@@ -16,15 +16,15 @@ module.exports = {
       }
     });
   },
-  getByName: function (req, res, next) {
+  getByName: async function (req, res, next) {
     console.log(req.params);
-    cityModel.findOne({ "name": req.params.cityName }, function (err, cityInfo) {
+    await cityModel.findOne({ "name": req.params.cityName }, async function (err, cityInfo) {
       if (err) {
         next(err);
       } else {
         if (!cityInfo) {
-          let resultPath = KartennGenerator.createMap("model.xml", req.params.cityName, req.params.cityName + ".png");
-          
+          let resultPath = await KartennGenerator.createMap("model.xml", req.params.cityName, req.params.cityName + ".png");
+
           if (!resultPath) {
             res.json({
               status: "error",
@@ -50,7 +50,7 @@ module.exports = {
           res.json({
             status: "success",
             message: "City found!!!",
-            data: { cities: cityInfo },
+            data: { name: cityInfo.name, file: cityInfo.file },
           });
         }
       }

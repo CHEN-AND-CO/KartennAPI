@@ -30,6 +30,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(helmet());
 app.use(cors());
+app.disable('etag');
 
 //app.use(cors());
 // CORS error fix

@@ -30,7 +30,7 @@ module.exports = {
             let generatedCityPathSimp = await KartennGenerator.createMap("model_simp.xml", req.params.cityName, req.params.cityName + "_simp.png");
 
             if (!generatedCityPath || !generatedCityPathSimp) {
-              res.json({
+              res.status(500).json({
                 status: "error",
                 message: "Failed to create the city ..."
               });
@@ -41,7 +41,7 @@ module.exports = {
                   if (err) {
                     next(err);
                   } else {
-                    res.json({
+                    res.status(201).json({
                       status: "success",
                       message: "city added successfully!!!",
                       data: { name: req.params.cityName, file: generatedCityPath, file_simp: generatedCityPathSimp }
@@ -51,13 +51,13 @@ module.exports = {
               );
             }
           } else {
-            res.json({
+            res.status(404).json({
               status: "error",
               message: "City isn't generated ..."
             });
           }
         } else {
-          res.json({
+          res.status(200).json({
             status: "success",
             message: "city found !!!",
             data: { name: cityInfo.cityName, file: cityInfo.file, file_simp: cityInfo.file_simp }
@@ -80,7 +80,7 @@ module.exports = {
             file_simp: city.file_simp
           });
         }
-        res.json({
+        res.status(200).json({
           status: "success",
           message: "Cities list found!!!",
           data: { cities: citiesList },

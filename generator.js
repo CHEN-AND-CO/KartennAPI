@@ -46,6 +46,13 @@ class Generator {
         //     return;
         // }
     }
+
+    async createPreview(input, output){
+        const stdout = await execShellCommand(`convert ${this._outputDir}${input} -resize '600x400^' -gravity center -crop 500x300+0+0 +repage ${this._outputDir}thumbnails/${output}`);
+        console.log(`${stdout}`);
+
+        return this._mapsUrl + "/thumbnails/" + output;
+    }
 }
 
 module.exports = Generator;

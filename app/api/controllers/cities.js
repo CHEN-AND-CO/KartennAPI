@@ -27,7 +27,9 @@ module.exports = {
         if (!cityInfo) {
           if (req.query.create == 'true') {
             let generatedCityPath = await KartennGenerator.createMap("model.xml", req.params.cityName, req.params.cityName + ".png");
+            let generatedCityPreviewPath = await KartennGenerator.createPreview(req.params.cityName + ".png", req.params.cityName + "_prev.jpg")
             let generatedCityPathSimp = await KartennGenerator.createMap("model_simp.xml", req.params.cityName, req.params.cityName + "_simp.png");
+            let generatedCityPreviewPathSimp = await KartennGenerator.createPreview(req.params.cityName + ".png", req.params.cityName + "_simp_prev.jpg")
 
             if (!generatedCityPath || !generatedCityPathSimp) {
               res.status(500).json({
@@ -36,7 +38,7 @@ module.exports = {
               });
             } else {
               cityModel.create(
-                { name: req.params.cityName, file: generatedCityPath, file_simp: generatedCityPathSimp },
+                { name: req.params.cityName, file: generatedCityPath, thumb: generatedCityPreviewPath, file_simp: generatedCityPathSimp, thumb_simp: generatedCityPreviewPathSimp },
                 function (err, result) {
                   if (err) {
                     next(err);
@@ -44,7 +46,7 @@ module.exports = {
                     res.status(201).json({
                       status: "success",
                       message: "city added successfully!!!",
-                      data: { name: req.params.cityName, file: generatedCityPath, file_simp: generatedCityPathSimp }
+                      data: { name: req.params.cityName, file: generatedCityPath, thumb: generatedCityPreviewPath, file_simp: generatedCityPathSimp, thumb_simp: generatedCityPreviewPathSimp }
                     });
                   }
                 }
@@ -60,7 +62,7 @@ module.exports = {
           res.status(200).json({
             status: "success",
             message: "city found !!!",
-            data: { name: cityInfo.cityName, file: cityInfo.file, file_simp: cityInfo.file_simp }
+            data: { name: cityInfo.cityName, file: cityInfo.file, file_simp: cityInfo.file_simp, thumb: cityInfo.thumb, thumb_simp: cityInfo.thumb_simp }
           });
         }
       }
@@ -77,7 +79,9 @@ module.exports = {
             id: city._id,
             name: city.name,
             file: city.file,
-            file_simp: city.file_simp
+            file_simp: city.file_simp,
+            thumb: city.thumb,
+            thumb_simp: city.thumb_simp
           });
         }
         res.status(200).json({
@@ -91,7 +95,7 @@ module.exports = {
   updateById: function (req, res, next) {
     cityModel.findByIdAndUpdate(
       req.params.cityId,
-      { name: req.body.name, file: req.body.file, file_simp: req.body.file_simp },
+      { name: req.body.name, file: req.body.file, file_simp: req.body.file_simp, thumb: req.body.thumb, thumb_simp: req.body.thumb_simp },
       function (err, cityInfo) {
         if (err) next(err);
         else {
@@ -118,7 +122,7 @@ module.exports = {
   },
   create: function (req, res, next) {
     cityModel.create(
-      { name: req.body.name, file: req.body.file, file_simp: req.body.file_simp },
+      { name: req.body.name, file: req.body.file, file_simp: req.body.file_simp, thumb: req.body.thumb, thumb_simp: req.body.thumb_simp },
       function (err, result) {
         if (err) next(err);
         else

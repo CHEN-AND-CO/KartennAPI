@@ -17,6 +17,16 @@ const CitySchema = new Schema({
     type: String,
     trim: true,
     required: true,
+  },
+  thumb: {
+    type: String,
+    trim: true,
+    required: true,
+  },
+  thumb_simp: {
+    type: String,
+    trim: true,
+    required: true,
   }
 });
 

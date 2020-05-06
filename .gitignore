@@ -113,3 +113,4 @@ db_settings
 config.json
 
 *.pem
+*.xml

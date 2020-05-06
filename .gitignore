@@ -108,7 +108,6 @@ package-lock.json
 
 data
 KartennGenerator
-model.xml
 
 db_settings
 config.json

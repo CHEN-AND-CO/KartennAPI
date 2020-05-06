@@ -24,7 +24,7 @@ module.exports = {
       } else {
         if (!cityInfo) {
           let generatedCityPath = await KartennGenerator.createMap("model.xml", req.params.cityName, req.params.cityName + ".png");
-          let generatedCityPathSimp = await KartennGenerator.createMap("model.xml", req.params.cityName, req.params.cityName + "_simp.png");
+          let generatedCityPathSimp = await KartennGenerator.createMap("model_simp.xml", req.params.cityName, req.params.cityName + "_simp.png");
 
           if (!generatedCityPath || !generatedCityPathSimp) {
             res.json({

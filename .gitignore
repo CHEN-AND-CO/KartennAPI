@@ -114,3 +114,5 @@ config.json
 
 *.pem
 *.xml
+model.xml
+model_simp.xml

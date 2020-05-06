@@ -18,40 +18,49 @@ module.exports = {
   },
   getByName: async function (req, res, next) {
     console.log(req.params);
+    console.log(req.query);
     await cityModel.findOne({ "name": req.params.cityName }, async function (err, cityInfo) {
       if (err) {
         next(err);
       } else {
+        console.log(cityInfo);
         if (!cityInfo) {
-          let generatedCityPath = await KartennGenerator.createMap("model.xml", req.params.cityName, req.params.cityName + ".png");
-          let generatedCityPathSimp = await KartennGenerator.createMap("model_simp.xml", req.params.cityName, req.params.cityName + "_simp.png");
+          if (req.query.create == 'true') {
+            let generatedCityPath = await KartennGenerator.createMap("model.xml", req.params.cityName, req.params.cityName + ".png");
+            let generatedCityPathSimp = await KartennGenerator.createMap("model_simp.xml", req.params.cityName, req.params.cityName + "_simp.png");
 
-          if (!generatedCityPath || !generatedCityPathSimp) {
+            if (!generatedCityPath || !generatedCityPathSimp) {
+              res.json({
+                status: "error",
+                message: "Failed to create the city ..."
+              });
+            } else {
+              cityModel.create(
+                { name: req.params.cityName, file: generatedCityPath, file_simp: generatedCityPathSimp },
+                function (err, result) {
+                  if (err) {
+                    next(err);
+                  } else {
+                    res.json({
+                      status: "success",
+                      message: "city added successfully!!!",
+                      data: { name: req.params.cityName, file: generatedCityPath, file_simp: generatedCityPathSimp }
+                    });
+                  }
+                }
+              );
+            }
+          } else {
             res.json({
               status: "error",
-              message: "Failed to create the city ..."
+              message: "City isn't generated ..."
             });
-          } else {
-            cityModel.create(
-              { name: req.params.cityName, file: generatedCityPath, file_simp: generatedCityPathSimp },
-              function (err, result) {
-                if (err) {
-                  next(err);
-                } else {
-                  res.json({
-                    status: "success",
-                    message: "city added successfully!!!",
-                    data: { name: req.params.cityName, file: generatedCityPath, file_simp: generatedCityPathSimp }
-                  });
-                }
-              }
-            );
           }
         } else {
           res.json({
             status: "success",
-            message: "City found!!!",
-            data: { name: cityInfo.name, file: cityInfo.file, file_simp: cityInfo.file_simp },
+            message: "city found !!!",
+            data: { name: cityInfo.cityName, file: cityInfo.file, file_simp: cityInfo.file_simp }
           });
         }
       }

@@ -29,7 +29,7 @@ module.exports = {
             let generatedCityPath = await KartennGenerator.createMap("model.xml", req.params.cityName, req.params.cityName + ".png");
             let generatedCityPreviewPath = await KartennGenerator.createPreview(req.params.cityName + ".png", req.params.cityName + "_prev.jpg")
             let generatedCityPathSimp = await KartennGenerator.createMap("model_simp.xml", req.params.cityName, req.params.cityName + "_simp.png");
-            let generatedCityPreviewPathSimp = await KartennGenerator.createPreview(req.params.cityName + ".png", req.params.cityName + "_simp_prev.jpg")
+            let generatedCityPreviewPathSimp = await KartennGenerator.createPreview(req.params.cityName + "_simp.png", req.params.cityName + "_simp_prev.jpg")
 
             if (!generatedCityPath || !generatedCityPathSimp) {
               res.status(500).json({

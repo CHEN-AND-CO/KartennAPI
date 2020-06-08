@@ -10,7 +10,7 @@ var consts = {
     https: true,
     // Maps & Stuff
     outputDir: "/var/www/website/maps/",    // Maps output path     
-    generatorPath: "KartennGenerator",      // Generator path
+    generatorPath: "./KartennGenerator",      // Generator path
     mapsUrl: "http://localhost:8080/maps/"  // Maps url
 };
 

@@ -1,5 +1,8 @@
 const cityModel = require("../models/cities");
 const KartennGenerator = require('../../../config/generator')
+const AsyncLock = require('async-lock');
+var lock = new AsyncLock();
+var waitList = [];
 
 module.exports = {
   getById: function (req, res, next) {
@@ -26,6 +29,28 @@ module.exports = {
         console.log(cityInfo);
         if (!cityInfo) {
           if (req.query.create == 'true') {
+            lock.acquire("generateCity", function (done) {
+              if (!(req.params.cityName in waitList)) {
+                waitList[req.params.cityName] = new Date().now();
+              } else {
+                if (waitList[req.params.cityName] + 600000 > new Date().now()) {
+                  delete waitList[req.params.cityName];
+
+                  res.status(500).json({
+                    status: "error",
+                    message: "Failed to create the city ..."
+                  });
+
+                  return;
+                }
+              }
+
+              setTimeout(function () {
+                done();
+              }, 1000)
+            }, function (err, ret) {
+            }, {});
+
             let generatedCityPath = await KartennGenerator.createMap("model.xml", req.params.cityName, req.params.cityName + ".png");
             let generatedCityPreviewPath = await KartennGenerator.createPreview(req.params.cityName + ".png", req.params.cityName + "_prev.jpg")
             let generatedCityPathSimp = await KartennGenerator.createMap("model_simp.xml", req.params.cityName, req.params.cityName + "_simp.png");
@@ -52,6 +77,17 @@ module.exports = {
                 }
               );
             }
+
+            lock.acquire("generateCity", function (done) {
+              if (req.params.cityName in waitList) {
+                delete waitList[req.params.cityName];
+              }
+
+              setTimeout(function () {
+                done();
+              }, 1000)
+            }, function (err, ret) {
+            }, {});
           } else {
             res.status(404).json({
               status: "error",

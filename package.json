@@ -4,6 +4,7 @@
   "description": "TODO",
   "main": "app.js",
   "dependencies": {
+    "async-lock": "^1.2.4",
     "bcrypt": "^4.0.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
